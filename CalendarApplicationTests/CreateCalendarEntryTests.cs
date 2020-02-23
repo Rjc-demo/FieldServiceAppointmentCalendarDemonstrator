@@ -7,12 +7,14 @@ namespace CalendarApplicationTests
 {
     public class CreateCalendarEntryTests
     {
+        private const string validSummary = "valid summary";
+        private const string validLocation = "valid Location";
         private CalendarAppointment _validAppointment;
 
         [SetUp]
         public void Setup()
         {
-            _validAppointment = new CalendarAppointment("valid summary");
+            _validAppointment = new CalendarAppointment(validSummary, validLocation);
         }
 
         [Test]
@@ -32,13 +34,23 @@ namespace CalendarApplicationTests
         /// <summary>
         /// requirement 3.1.5
         /// </summary>
-        /// <param name="badSummary"></param>
         [TestCase("")]
         [TestCase(" ")]
         [TestCase(null)]
         public void TestThatAppointmentSummaryIsRequired(string badSummary)
         {
-            Assert.Throws<ArgumentException>(() => new CalendarAppointment(badSummary));
+            Assert.Throws<ArgumentException>(() => new CalendarAppointment(badSummary, validLocation));
+        }
+
+        /// <summary>
+        /// requirement 3.1.5
+        /// </summary>
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase(null)]
+        public void TestThatAppointmentLocationIsRequired(string badLocation)
+        {
+            Assert.Throws<ArgumentException>(() => new CalendarAppointment(validSummary, badLocation));
         }
     }
 }
