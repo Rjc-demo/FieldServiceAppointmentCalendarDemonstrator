@@ -10,11 +10,13 @@ namespace CalendarApplicationTests
         private const string validSummary = "valid summary";
         private const string validLocation = "valid Location";
         private CalendarAppointment _validAppointment;
+        private DateTimeSpan _validDateRange;
 
         [SetUp]
         public void Setup()
         {
-            _validAppointment = new CalendarAppointment(validSummary, validLocation);
+            _validDateRange = new DateTimeSpan(DateTime.Now, DateTime.Now.AddDays(1));
+            _validAppointment = new CalendarAppointment(validSummary, validLocation, _validDateRange);
         }
 
         [Test]
@@ -39,7 +41,7 @@ namespace CalendarApplicationTests
         [TestCase(null)]
         public void TestThatAppointmentSummaryIsRequired(string badSummary)
         {
-            Assert.Throws<ArgumentException>(() => new CalendarAppointment(badSummary, validLocation));
+            Assert.Throws<ArgumentException>(() => new CalendarAppointment(badSummary, validLocation, _validDateRange));
         }
 
         /// <summary>
@@ -50,7 +52,16 @@ namespace CalendarApplicationTests
         [TestCase(null)]
         public void TestThatAppointmentLocationIsRequired(string badLocation)
         {
-            Assert.Throws<ArgumentException>(() => new CalendarAppointment(validSummary, badLocation));
+            Assert.Throws<ArgumentException>(() => new CalendarAppointment(validSummary, badLocation, _validDateRange));
         }
+
+        [Test]
+        public void TestThatANegativeDateRangeIsRejected()
+        {
+            var badDateRange = new DateTimeSpan(DateTime.Now, DateTime.Now.AddDays(-1));
+            Assert.Throws<ArgumentException>(() => new CalendarAppointment(validSummary, validLocation, badDateRange));
+        }
+
+
     }
 }
