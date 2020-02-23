@@ -62,6 +62,15 @@ namespace CalendarApplicationTests
             Assert.Throws<ArgumentException>(() => new CalendarAppointment(validSummary, validLocation, badDateRange));
         }
 
+        [Test]
+        public void TestThatAVehicleCannotHaveOverlappingAppointments()
+        {
+            var appointment = _validAppointment;
+            var vehicle = new Vehicle();
 
+            vehicle.Appointments.Add(appointment);
+
+            Assert.Throws<IncompatibleAppointmentException>(() => vehicle.Appointments.Add(appointment));
+        }
     }
 }

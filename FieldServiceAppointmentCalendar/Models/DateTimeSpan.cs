@@ -20,5 +20,20 @@ namespace FieldServiceAppointmentCalendar.Models
                 return end - start;
             }
         }
+
+        public bool HasValidRange
+        {
+            get
+            {
+                return Duration.TotalSeconds > 0;
+            }
+        }
+
+        internal bool Intersects(DateTimeSpan dateRange)
+        {
+            if (!HasValidRange || !dateRange.HasValidRange)
+                throw new InvalidOperationException("Incomparable date ranges.");
+            return end > dateRange.start || dateRange.end > start;
+        }
     }
 }

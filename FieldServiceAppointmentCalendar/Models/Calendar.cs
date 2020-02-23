@@ -11,6 +11,9 @@ namespace FieldServiceAppointmentCalendar.Models
 
         public void Add(CalendarAppointment appointment)
         {
+            foreach (var existingAppointment in _appointments)
+                if (appointment.IsIncompatibleWith(existingAppointment))
+                    throw new IncompatibleAppointmentException("Overlap with existing appointment.");
             _appointments.Add(appointment);
         }
 
