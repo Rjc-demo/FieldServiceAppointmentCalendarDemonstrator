@@ -4,20 +4,17 @@ namespace FieldServiceAppointmentCalendar.Models
 {
     public class DateTimeSpan
     {
-        private DateTime start;
-        private DateTime end;
-
         public DateTimeSpan(DateTime start, DateTime end)
         {
-            this.start = start;
-            this.end = end;
+            Start = start;
+            End = end;
         }
 
         public TimeSpan Duration
         {
             get
             {
-                return end - start;
+                return End - Start;
             }
         }
 
@@ -29,11 +26,15 @@ namespace FieldServiceAppointmentCalendar.Models
             }
         }
 
+        public DateTime Start { get; private set; }
+
+        public DateTime End { get; private set; }
+
         internal bool Intersects(DateTimeSpan dateRange)
         {
             if (!HasValidRange || !dateRange.HasValidRange)
                 throw new InvalidOperationException("Incomparable date ranges.");
-            return end > dateRange.start || dateRange.end > start;
+            return End > dateRange.Start && dateRange.End > Start;
         }
     }
 }

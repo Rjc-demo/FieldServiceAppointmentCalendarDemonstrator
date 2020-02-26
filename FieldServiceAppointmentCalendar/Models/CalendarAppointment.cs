@@ -23,9 +23,13 @@ namespace FieldServiceAppointmentCalendar.Models
             this.dateRange = dateRange;
         }
 
+        public DateTimeSpan DateRange => dateRange;
+
         internal bool IsIncompatibleWith(CalendarAppointment existingAppointment)
         {
-            return dateRange.Intersects(existingAppointment.dateRange);
+            return DateRange.Intersects(existingAppointment.DateRange);
         }
+
+
     }
 }
