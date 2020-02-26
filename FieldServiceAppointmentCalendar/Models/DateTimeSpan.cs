@@ -36,5 +36,8 @@ namespace FieldServiceAppointmentCalendar.Models
                 throw new InvalidOperationException("Incomparable date ranges.");
             return End > dateRange.Start && dateRange.End > Start;
         }
+
+        [System.ComponentModel.DataAnnotations.Key]
+        public Guid ID { get; set; }
     }
 }

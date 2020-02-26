@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+
+using FieldServiceAppointmentCalendar.Models;
 
 namespace FieldServiceAppointmentCalendar
 {
@@ -24,6 +27,8 @@ namespace FieldServiceAppointmentCalendar
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var connectionString = Configuration.GetConnectionString("FleetAppointmentsConnection");
+            services.AddDbContext<Fleet>(options => options.UseSqlServer(connectionString));            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +55,7 @@ namespace FieldServiceAppointmentCalendar
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Vehicles}/{action=Index}/{id?}");
             });
         }
     }

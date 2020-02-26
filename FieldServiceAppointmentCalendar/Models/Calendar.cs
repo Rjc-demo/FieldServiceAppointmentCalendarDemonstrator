@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace FieldServiceAppointmentCalendar.Models
@@ -26,5 +28,8 @@ namespace FieldServiceAppointmentCalendar.Models
         {
             return GetEnumerator();
         }
+
+        [Key]
+        public Guid ID { get; set; }
     }
 }
